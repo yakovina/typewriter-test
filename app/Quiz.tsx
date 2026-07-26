@@ -11,6 +11,7 @@ import {
 } from "../data/quiz";
 import { asset } from "./bp";
 import { renderEmphasis } from "./emphasis";
+import { sendStats, type AnswerStat } from "./stats";
 import ShareButtons from "./ShareButtons";
 import { SITE_URL, TEST_SHARE_TEXT, TEST_SHARE_TITLE, resultShareUrl } from "./share";
 
@@ -82,6 +83,8 @@ export default function Quiz() {
   const [order, setOrder] = useState<number[]>(() => questions.map((_, i) => i));
   const topRef = useRef<HTMLDivElement>(null);
   const fbRef = useRef<HTMLDivElement>(null);
+  /** Відповіді поточного проходження — для статистики. */
+  const answersRef = useRef<AnswerStat[]>([]);
 
   const q = questions[order[idx]] ?? questions[idx];
   const total = questions.length;
@@ -94,6 +97,7 @@ export default function Quiz() {
     );
 
   const start = () => {
+    answersRef.current = [];
     setOrder(shuffle(questions.map((_, i) => i)));
     setState("playing");
     setIdx(0);
@@ -106,6 +110,7 @@ export default function Quiz() {
     if (picked !== null) return;
     setPicked(key);
     if (key === q.correct) setScore((s) => s + 1);
+    answersRef.current.push({ id: q.id, block: q.block, picked: key, ok: key === q.correct });
     setState("feedback");
     // проскролюємо до вердикту, щойно він з'явиться
     requestAnimationFrame(() =>
@@ -119,6 +124,14 @@ export default function Quiz() {
       setPicked(null);
       setState("playing");
     } else {
+      // фінал: відправляємо статистику проходження в Google Sheets
+      const finalScore = answersRef.current.filter((a) => a.ok).length;
+      sendStats({
+        score: finalScore,
+        total,
+        level: getLevel(finalScore).title,
+        answers: answersRef.current,
+      });
       setState("finished");
     }
     toTop();
