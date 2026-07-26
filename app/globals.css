@@ -13,6 +13,7 @@
   --bad: #c03a2e;
   --gold: #b07d2b;
   --sans: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Lora", Georgia, "Times New Roman", serif;
   --mono: "Courier Prime", "Courier New", ui-monospace, monospace;
 }
 
@@ -20,6 +21,14 @@
   font-family: "Open Sans";
   src: url("/fonts/opensans.woff2") format("woff2");
   font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("/fonts/lora.woff2") format("woff2");
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
@@ -387,10 +396,11 @@ h1.title .accent {
   margin-bottom: 12px;
 }
 
+/* текст «вирізки» — газетна гарнітура, читається як колонка */
 .clip .txt {
-  font-family: var(--mono);
-  font-size: 14.5px;
-  line-height: 1.6;
+  font-family: var(--serif);
+  font-size: 15.5px;
+  line-height: 1.66;
   white-space: pre-line;
 }
 
@@ -435,9 +445,9 @@ h1.title .accent {
 }
 
 .qText {
-  font-family: var(--mono);
-  font-size: 14px;
-  line-height: 1.55;
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 .prompt {
