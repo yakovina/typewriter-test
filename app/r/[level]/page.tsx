@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLevelBySlug, levels } from "../../../data/quiz";
+import { asset } from "../../bp";
 import { renderEmphasis } from "../../emphasis";
 import ShareButtons from "../../ShareButtons";
 import { SITE_URL, resultShareUrl } from "../../share";
@@ -73,12 +74,12 @@ export default async function ResultSharePage({
           <div className="charScene" aria-hidden>
             <span className="decoStrip left" />
             <span className="decoStrip right" />
-            <img className="deco d1" src="/art/el-1.png" alt="" />
-            <img className="deco d2" src="/art/el-3.png" alt="" />
-            <img className="deco d3" src="/art/el-5.png" alt="" />
-            <img className="deco d4" src="/art/el-4.png" alt="" />
+            <img className="deco d1" src={asset("/art/el-1.png")} alt="" />
+            <img className="deco d2" src={asset("/art/el-3.png")} alt="" />
+            <img className="deco d3" src={asset("/art/el-5.png")} alt="" />
+            <img className="deco d4" src={asset("/art/el-4.png")} alt="" />
             <span className="charDisc" />
-            <img className="char" src={lvl.character} alt="" />
+            <img className="char" src={asset(lvl.character)} alt="" />
           </div>
           <div className="prose">
             <p>{renderEmphasis(lvl.description)}</p>

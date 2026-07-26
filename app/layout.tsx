@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { asset } from "./bp";
 import { SITE_URL, TEST_SHARE_TITLE } from "./share";
 
 const TITLE = "Перевірте, чи легко вами маніпулювати · Тест на медіаграмотність";
@@ -44,7 +45,7 @@ export default function RootLayout({
             className="logo"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hmarochos_logo_new.svg" alt="Хмарочос" />
+            <img src={asset("/hmarochos_logo_new.svg")} alt="Хмарочос" />
           </a>
           <span className="tag red">Медіаграмотність</span>
         </header>

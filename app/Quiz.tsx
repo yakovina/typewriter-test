@@ -9,6 +9,7 @@ import {
   intro,
   questions,
 } from "../data/quiz";
+import { asset } from "./bp";
 import { renderEmphasis } from "./emphasis";
 import ShareButtons from "./ShareButtons";
 import { SITE_URL, TEST_SHARE_TEXT, TEST_SHARE_TITLE, resultShareUrl } from "./share";
@@ -216,7 +217,7 @@ export default function Quiz() {
                 <div className="trapCard">
                   <div className="trapHead">
                     <span className="trapIcon">
-                      <img src={blockElement(q.blockNo)} alt="" />
+                      <img src={asset(blockElement(q.blockNo))} alt="" />
                     </span>
                     <div>
                       <div className="trapKicker">Когнітивна пастка</div>
@@ -253,15 +254,15 @@ export default function Quiz() {
             <div className="charScene" aria-hidden>
               <span className="decoStrip left" />
               <span className="decoStrip right" />
-              <img className="deco d1" src="/art/el-1.png" alt="" />
-              <img className="deco d2" src="/art/el-3.png" alt="" />
-              <img className="deco d3" src="/art/el-5.png" alt="" />
-              <img className="deco d4" src="/art/el-4.png" alt="" />
+              <img className="deco d1" src={asset("/art/el-1.png")} alt="" />
+              <img className="deco d2" src={asset("/art/el-3.png")} alt="" />
+              <img className="deco d3" src={asset("/art/el-5.png")} alt="" />
+              <img className="deco d4" src={asset("/art/el-4.png")} alt="" />
               <span className="charDisc" />
               <span className="charStamp">
                 {score}/{total}
               </span>
-              <img className="char" src={level.character} alt="" />
+              <img className="char" src={asset(level.character)} alt="" />
             </div>
             <div className="prose">
               <p>{renderEmphasis(level.description)}</p>
