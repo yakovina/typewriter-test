@@ -21,6 +21,9 @@ var TRAPS = [
 /** Правильні відповіді Q1..Q10. */
 var KEY = ["Б", "Г", "А", "В", "Б", "Б", "В", "В", "В", "В"];
 
+/** Аркуш із даними: відповіді Google Form. */
+var DATA_SHEET = "Form Responses 1";
+
 /** Тексти питань Q1..Q10. */
 var QTEXTS = [
   "Який матеріал ви відкриєте першим і прочитаєте з більшою увагою? (велодоріжки: два заголовки)",
@@ -96,7 +99,7 @@ function setupStats() {
   var cols = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
   for (var i = 0; i < 10; i++) {
     var c = cols[i];
-    var rng = "results!" + c + "2:" + c;
+    var rng = "'" + DATA_SHEET + "'!" + c + "2:" + c;
     sh.appendRow([
       "Q" + (i + 1),
       TRAPS[i],
@@ -115,10 +118,10 @@ function setupStats() {
   sh.appendRow([""]);
   sh.appendRow(["Рівень", "Проходжень"]);
   ["Час вмикати критичне мислення", "Обережний читач", "Майстер медіаграмотності"].forEach(function (l) {
-    sh.appendRow([l, '=COUNTIF(results!C2:C,"' + l + '")']);
+    sh.appendRow([l, '=COUNTIF(\'' + DATA_SHEET + '\'!C2:C,"' + l + '")']);
   });
-  sh.appendRow(["Всього проходжень", "=COUNTA(results!A2:A)"]);
-  sh.appendRow(["Середній бал", '=IFERROR(ROUND(AVERAGE(results!B2:B),1),"—")']);
+  sh.appendRow(["Всього проходжень", "=COUNTA('" + DATA_SHEET + "'!A2:A)"]);
+  sh.appendRow(["Середній бал", '=IFERROR(ROUND(AVERAGE(\'' + DATA_SHEET + '\'!B2:B),1),"—")']);
 }
 
 /* ===================== ОФОРМЛЕННЯ ===================== */
@@ -149,7 +152,7 @@ function header_(sh, cols) {
 }
 
 function formatResults_(ss) {
-  var sh = ss.getSheetByName("results");
+  var sh = ss.getSheetByName(DATA_SHEET);
   if (!sh) return;
   header_(sh, 13);
   sh.setColumnWidth(1, 150);

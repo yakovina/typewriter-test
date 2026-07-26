@@ -13,11 +13,23 @@ export const STATS_URL =
  * entries — ідентифікатори полів (entry.XXXXXXX) для балів, рівня та Q1..Q10.
  */
 export const FORM = {
-  action: "",
+  action:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdlF1vMFAXRGKwWm6wP79dAEDxWzezL_o2gDgEsRrwEZDBkpg/formResponse",
   entries: {
-    score: "",
-    level: "",
-    q: ["", "", "", "", "", "", "", "", "", ""],
+    score: "entry.1529046415",
+    level: "entry.1115484389",
+    q: [
+      "entry.1482872937",
+      "entry.122240314",
+      "entry.713812458",
+      "entry.371672774",
+      "entry.1615217560",
+      "entry.1656246622",
+      "entry.1093236524",
+      "entry.1629397288",
+      "entry.1527043675",
+      "entry.275439209",
+    ],
   },
 };
 
