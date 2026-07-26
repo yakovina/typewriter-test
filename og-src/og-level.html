@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: "Open Sans";
+    src: url("file:///Users/sashimi/Documents/testai2/typewriter-test/public/fonts/opensans.woff2") format("woff2");
+    font-weight: 300 800;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: "Open Sans", Arial, sans-serif;
+    color: #262626;
+    position: relative;
+    background: #e8e7e1;
+  }
+  .bg {
+    position: absolute; inset: 0;
+    background: url("file:///Users/sashimi/Documents/testai2/typewriter-test/public/art/collage.jpg") left center / cover no-repeat;
+  }
+  .veil {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(248,245,235,0.85) 0%, rgba(248,245,235,0.68) 60%, rgba(248,245,235,0.45) 100%);
+  }
+  .logo { position: absolute; top: 38px; left: 56px; height: 52px; }
+  .content { position: absolute; left: 56px; top: 168px; width: 690px; }
+  .tag {
+    display: inline-block;
+    background: #262626; color: #fff;
+    font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 7px 20px 9px;
+    transform: rotate(-1.4deg);
+    box-shadow: 4px 5px 0 rgba(38,38,38,0.18);
+    margin-bottom: 28px;
+  }
+  h1 .lead { display: block; font-size: 44px; font-weight: 800; margin-bottom: 14px; }
+  h1 .accent {
+    display: inline;
+    background: __ACCENT__; color: #fff;
+    font-size: 58px; font-weight: 800; line-height: 1.32;
+    padding: 2px 18px 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .pillRow { display: flex; align-items: center; gap: 22px; margin-top: 34px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: #262626;
+    border: 2.5px solid #fff;
+    border-radius: 999px;
+    padding: 9px 13px;
+    box-shadow: 0 6px 18px rgba(20,20,18,0.3);
+  }
+  .dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 1.8px solid #fff; color: #fff;
+    display: grid; place-items: center;
+    font-size: 15px; font-weight: 600;
+  }
+  .dot.on { background: __ACCENT__; border-color: __ACCENT__; }
+  .range {
+    font-family: "Courier New", monospace;
+    font-size: 21px; font-weight: 700; letter-spacing: 0.06em;
+    color: #3d3d3b;
+  }
+  .char {
+    position: absolute; right: 44px; bottom: 46px; z-index: 1;
+    max-height: 480px; max-width: 400px;
+    filter: drop-shadow(0 12px 26px rgba(20,20,18,0.3));
+  }
+  .strip {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 46px;
+    background: #262626;
+  }
+  .credit {
+    position: absolute; left: 56px; bottom: 12px; z-index: 2;
+    font-family: "Courier New", monospace;
+    font-size: 17px; font-weight: 700;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="veil"></div>
+  <img class="logo" src="file:///Users/sashimi/Documents/testai2/typewriter-test/public/hmarochos_logo_new.svg" alt="">
+  <div class="content">
+    <div class="tag">Результат тесту</div>
+    <h1>
+      <span class="lead">Мій рівень —</span>
+      <span class="accent">__TITLE__</span>
+    </h1>
+    <div class="pillRow">
+      <div class="pill">__DOTS__</div>
+      <div class="range">__RANGE__</div>
+    </div>
+  </div>
+  <img class="char" src="file:///Users/sashimi/Documents/testai2/typewriter-test/public/art/__CHAR__" alt="">
+  <div class="strip"></div>
+  <div class="credit">Тест на медіаграмотність · Хмарочос</div>
+</body>
+</html>

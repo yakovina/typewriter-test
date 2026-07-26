@@ -1,0 +1,823 @@
+/* ============================================================
+   «Друкарська машинка» — колажна тема тесту на медіаграмотність.
+   Референс: паперова текстура, чб-колаж (газети/машинка),
+   темна пігулка прогресу з кружечками, чорні кнопки-плашки.
+   ============================================================ */
+
+:root {
+  --ink: #262626;
+  --ink-soft: #3d3d3b;
+  --paper-card: #f1e9cf;
+  --paper-clip: #fbf9f0;
+  --ok: #2e7d3b;
+  --bad: #c03a2e;
+  --gold: #b07d2b;
+  --sans: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Courier Prime", "Courier New", ui-monospace, monospace;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/fonts/opensans.woff2") format("woff2");
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: #e8e7e1 url("/art/paper.jpg") center / 900px repeat;
+  min-height: 100dvh;
+}
+
+/* ---------- фонові шари колажу ---------- */
+
+.bgCollage {
+  position: fixed;
+  inset: 0;
+  background: url("/art/collage.jpg") center / cover no-repeat;
+  z-index: -2;
+}
+
+.bgVeil {
+  position: fixed;
+  inset: 0;
+  background: rgba(248, 245, 235, 0.62);
+  z-index: -1;
+}
+
+/* ---------- хедер ---------- */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background:
+    linear-gradient(rgba(250, 246, 233, 0.9), rgba(250, 246, 233, 0.9)),
+    url("/art/paper.jpg") center / 900px repeat;
+  border-bottom: 1.6px solid var(--ink);
+  box-shadow: 0 2px 14px rgba(20, 20, 18, 0.14);
+}
+
+/* плашки-штампи по боках — як акцент у заголовку інтро */
+.masthead .tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 4px 12px 5px;
+  box-shadow: 2px 3px 0 rgba(38, 38, 38, 0.18);
+}
+
+.masthead .tag.ink {
+  justify-self: start;
+  background: var(--ink);
+  transform: rotate(-1.4deg);
+}
+
+.masthead .tag.red {
+  justify-self: end;
+  background: var(--bad);
+  transform: rotate(1.2deg);
+}
+
+.masthead .logo {
+  justify-self: center;
+  display: block;
+  transition: opacity 0.12s ease;
+}
+
+.masthead .logo:hover {
+  opacity: 0.75;
+}
+
+.masthead .logo img {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+@media (max-width: 640px) {
+  .masthead {
+    padding: 8px 10px;
+  }
+
+  .masthead .tag {
+    font-size: 9.5px;
+    padding: 3px 8px 4px;
+    letter-spacing: 0.06em;
+  }
+
+  .masthead .logo img {
+    height: 26px;
+  }
+}
+
+/* ---------- сцена та картка ---------- */
+
+.stage {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 56px 16px 72px;
+}
+
+.card {
+  position: relative;
+  width: min(760px, 100%);
+  /* світлий теплий папір: легка кремова вуаль, текстура лишається помітною */
+  background:
+    linear-gradient(rgba(250, 243, 219, 0.5), rgba(250, 243, 219, 0.5)),
+    url("/art/paper.jpg") center / 900px repeat;
+  box-shadow:
+    0 30px 70px rgba(20, 20, 18, 0.35),
+    0 4px 14px rgba(20, 20, 18, 0.18);
+  padding: 44px 48px 48px;
+}
+
+.card.withChar {
+  /* місце під персонажа праворуч */
+  padding-right: 240px;
+}
+
+/* ---------- пігулка прогресу ---------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--ink);
+  border: 2px solid #fff;
+  border-radius: 999px;
+  padding: 9px 13px;
+  box-shadow: 0 4px 14px rgba(20, 20, 18, 0.25);
+  margin-bottom: 26px;
+}
+
+.dot {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 50%;
+  border: 1.6px solid #fff;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.dot.done {
+  background: #fff;
+  color: var(--ink);
+}
+
+.dot.now {
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, 0.45);
+}
+
+.dot.off {
+  opacity: 0.42;
+}
+
+/* підсумок: перші N кружечків (кількість правильних відповідей) — зелені */
+.dot.ok {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: #fff;
+}
+
+/* ---------- типографіка ---------- */
+
+.kicker {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bad);
+  margin-bottom: 14px;
+}
+
+h1.title {
+  font-size: clamp(26px, 4.6vw, 38px);
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+h1.title .accent {
+  display: inline-block;
+  background: var(--bad);
+  color: #fff;
+  padding: 1px 12px 4px;
+  transform: rotate(-1.2deg);
+}
+
+.range {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+
+.lead {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.prose p {
+  font-size: 15.5px;
+  line-height: 1.62;
+  margin-bottom: 12px;
+}
+
+.prose strong,
+.expl strong {
+  font-weight: 700;
+  box-shadow: inset 0 -0.45em rgba(38, 38, 38, 0.14);
+}
+
+/* ---------- інтро: кроки ---------- */
+
+.steps {
+  list-style: none;
+  margin: 20px 0 26px;
+  display: grid;
+  gap: 10px;
+}
+
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 14.5px;
+}
+
+.steps .n {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border-radius: 50%;
+  border: 1.6px solid var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--paper-clip);
+}
+
+.steps li:nth-child(1) .n {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+
+.steps li:nth-child(2) .n {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.steps li:nth-child(3) .n {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+/* ---------- питання ---------- */
+
+/* розкриття пастки — без рамки й фону, лише вміст */
+.trapCard {
+  margin: 14px 0 20px;
+}
+
+.trapHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 13px;
+  margin-bottom: 13px;
+  border-bottom: 1px dashed color-mix(in srgb, var(--acc, #262626) 45%, transparent);
+}
+
+.trapIcon {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 1.8px dashed var(--acc, var(--ink));
+  background: #fff;
+  display: grid;
+  place-items: center;
+  transform: rotate(3deg);
+}
+
+.trapIcon img {
+  width: 88px;
+  mix-blend-mode: multiply;
+}
+
+.trapKicker {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc, var(--ink));
+  margin-bottom: 3px;
+}
+
+.trapHead .uk {
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.trapHead .en {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.trapCard .expl {
+  margin-bottom: 0;
+}
+
+.clip {
+  position: relative;
+  background: var(--paper-clip);
+  border: 1.5px solid rgba(38, 38, 38, 0.25);
+  box-shadow: 5px 7px 0 color-mix(in srgb, var(--acc, #262626) 16%, transparent);
+  transform: rotate(-0.5deg);
+  padding: 18px 20px 16px;
+  margin-bottom: 22px;
+}
+
+.clip .src {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acc, var(--ink-soft));
+  border-bottom: 1px dashed color-mix(in srgb, var(--acc, #262626) 55%, transparent);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.clip .txt {
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* підкреслення важливого у «вирізці»: без жирного, лише делікатна лінія */
+.clip .txt strong,
+.clip .qText strong {
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--acc, #262626) 40%, transparent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+/* окремі блоки цитат видань */
+.quote {
+  background: #fff;
+  border: 1.5px solid rgba(38, 38, 38, 0.2);
+  box-shadow: 3px 4px 0 rgba(38, 38, 38, 0.07);
+  padding: 12px 14px 11px;
+  margin-top: 13px;
+}
+
+.quote:nth-of-type(odd) {
+  transform: rotate(0.5deg);
+}
+
+.quote:nth-of-type(even) {
+  transform: rotate(-0.5deg);
+}
+
+.qLabel {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--acc, var(--ink));
+  color: #fff;
+  padding: 2px 9px 3px;
+  margin-bottom: 8px;
+}
+
+.qText {
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.prompt {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
+.opts {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  width: 100%;
+  text-align: left;
+  background: rgba(250, 249, 244, 0.75);
+  border: 1.6px solid var(--ink);
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+}
+
+.opt .k {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  border: 1.6px solid currentColor;
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (hover: hover) {
+  .opt:not(:disabled):hover {
+    background: var(--acc, var(--ink));
+    border-color: var(--acc, var(--ink));
+    color: #fff;
+  }
+}
+
+.opt:disabled {
+  cursor: default;
+}
+
+/* стан після відповіді: без зміни фону та обведення — лише колір тексту */
+.opt.correct {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.opt.wrongPick {
+  color: var(--bad);
+}
+
+.opt.dim {
+  opacity: 0.45;
+}
+
+/* ---------- фідбек ---------- */
+
+/* вердикт — рядок у рамці кольору результату */
+.verdict {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1.6px solid var(--bad);
+  color: var(--bad);
+  background: var(--paper-clip);
+  padding: 8px 15px 9px;
+  margin: 16px 0 6px;
+  transform: rotate(-0.4deg);
+}
+
+.verdict.ok {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.expl {
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* ---------- кнопки ---------- */
+
+.btn {
+  display: inline-block;
+  background: #1c1c1b;
+  color: #fff;
+  border: none;
+  border-radius: 13px;
+  box-shadow: inset 0 0 0 2px #fff, 0 6px 18px rgba(20, 20, 18, 0.3);
+  font-family: var(--sans);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.btn:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* ---------- ілюстрації ---------- */
+
+.char {
+  position: absolute;
+  right: -70px;
+  bottom: -24px;
+  width: auto;
+  height: auto;
+  /* вписуємо будь-які пропорції: і широких, і високих персонажів */
+  max-width: 300px;
+  max-height: min(480px, 100%);
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 10px 24px rgba(20, 20, 18, 0.28));
+}
+
+/* на десктопі сценка «прозора» — персонаж позиціюється відносно картки */
+.charScene {
+  display: contents;
+}
+
+.charDisc,
+.charStamp,
+.deco,
+.decoStrip {
+  display: none;
+}
+
+.score {
+  font-family: var(--mono);
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.score b {
+  font-size: 19px;
+  color: var(--acc, var(--ink));
+}
+
+/* ---------- шеринг ---------- */
+
+.share {
+  margin-top: 26px;
+  border-top: 1px dashed rgba(38, 38, 38, 0.35);
+  padding-top: 16px;
+}
+
+.share.compact {
+  margin-top: 20px;
+  padding-top: 14px;
+}
+
+.share .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.shareBtns {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shareBtn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.6px solid var(--ink);
+  background: var(--paper-clip);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.12s ease;
+}
+
+.shareBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.shareBtn:hover {
+  background: var(--acc, var(--ink));
+  border-color: var(--acc, var(--ink));
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.shareHint {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+/* ---------- адаптив ---------- */
+
+@media (max-width: 760px) {
+  .stage {
+    padding: 28px 12px 48px;
+  }
+
+  .card {
+    padding: 28px 22px 34px;
+  }
+
+  .card.withChar {
+    padding-right: 22px;
+    padding-bottom: 34px;
+  }
+
+  /* на мобільному — колажна сценка під кнопкою: коло кольору рівня,
+     нахилений персонаж, що виходить за край картки, і штамп з балами */
+  .charScene {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    margin: 22px 0 26px;
+  }
+
+  /* широка смуга літерної сітки за колом — як у вихідному колажі */
+  .decoStrip.left {
+    display: block;
+    position: absolute;
+    left: -22px;
+    right: -22px;
+    top: 50%;
+    height: 108px;
+    transform: translateY(-50%);
+    background: url("/art/letters-band-h.png") center / auto 100% repeat-x;
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+  }
+
+  /* єдиний пазл, що чіпляється за край кола */
+  .deco.d1 {
+    display: block;
+    position: absolute;
+    width: 74px;
+    left: 13%;
+    bottom: 12%;
+    transform: rotate(-10deg);
+    mix-blend-mode: multiply;
+    z-index: 1;
+  }
+
+  /* дрібні геометричні акценти колажу */
+  .charScene::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 9%;
+    width: 14px;
+    height: 14px;
+    background: var(--ink);
+    opacity: 0.7;
+    transform: rotate(8deg);
+  }
+
+  .charScene::after {
+    content: "";
+    position: absolute;
+    bottom: 12%;
+    right: 7%;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--ink);
+    opacity: 0.55;
+    transform: rotate(-7deg);
+  }
+
+  .char {
+    z-index: 2;
+  }
+
+  .charStamp {
+    z-index: 3;
+  }
+
+  /* персонаж по центру кольорового кола, трохи правіше центру сценки */
+  .char {
+    position: absolute;
+    z-index: 1;
+    left: 69%;
+    top: 50%;
+    margin: 0;
+    max-width: 48%;
+    max-height: 280px;
+    transform: translate(-50%, -50%) rotate(-3deg);
+  }
+
+  .charDisc {
+    display: block;
+    position: absolute;
+    left: 69%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(210px, 56vw);
+    height: min(210px, 56vw);
+    border-radius: 50%;
+    background: var(--acc, var(--ink));
+    opacity: 0.85;
+  }
+
+  .charStamp {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    z-index: 2;
+    right: 4%;
+    top: 2px;
+    width: 68px;
+    height: 68px;
+    border: 2.5px dashed var(--acc, var(--ink));
+    border-radius: 50%;
+    background: var(--paper-clip);
+    color: var(--acc, var(--ink));
+    font-family: var(--mono);
+    font-size: 16px;
+    font-weight: 700;
+    transform: rotate(12deg);
+    box-shadow: 0 4px 12px rgba(20, 20, 18, 0.18);
+  }
+
+  .trapIcon {
+    width: 74px;
+    height: 74px;
+  }
+
+  .trapIcon img {
+    width: 68px;
+  }
+
+  .trapHead .uk {
+    font-size: 16px;
+  }
+
+  .pill {
+    gap: 5px;
+    padding: 7px 10px;
+  }
+
+  .dot {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+    font-size: 11.5px;
+  }
+}
