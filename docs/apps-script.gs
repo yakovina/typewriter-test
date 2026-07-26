@@ -69,7 +69,8 @@ function setupStats() {
   sh.clear();
 
   sh.appendRow(["Питання", "Пастка", "Правильна", "А", "Б", "В", "Г", "Відповідей", "% правильних"]);
-  // Q1..Q10 лежать у results!D..M
+  // Q1..Q10 лежать у results!D..M. Порівнюємо як "літера*" — стійко до
+  // старого формату "Б ✓" і випадкових пробілів.
   var cols = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
   for (var i = 0; i < 10; i++) {
     var c = cols[i];
@@ -78,12 +79,12 @@ function setupStats() {
       "Q" + (i + 1),
       TRAPS[i],
       KEY[i],
-      '=COUNTIF(' + rng + ',"А")',
-      '=COUNTIF(' + rng + ',"Б")',
-      '=COUNTIF(' + rng + ',"В")',
-      '=COUNTIF(' + rng + ',"Г")',
+      '=COUNTIF(' + rng + ',"А*")',
+      '=COUNTIF(' + rng + ',"Б*")',
+      '=COUNTIF(' + rng + ',"В*")',
+      '=COUNTIF(' + rng + ',"Г*")',
       "=COUNTA(" + rng + ")",
-      '=IFERROR(ROUND(COUNTIF(' + rng + ',"' + KEY[i] + '")/COUNTA(' + rng + ')*100)&"%","—")',
+      '=IFERROR(ROUND(COUNTIF(' + rng + ',"' + KEY[i] + '*")/COUNTA(' + rng + ')*100)&"%","—")',
     ]);
   }
 
