@@ -107,9 +107,10 @@ function setupStats() {
       '=COUNTIF(' + rng + ',"В")',
       '=COUNTIF(' + rng + ',"Г")',
       "=COUNTA(" + rng + ")",
-      '=IFERROR(ROUND(COUNTIF(' + rng + ',"' + KEY[i] + '")/COUNTA(' + rng + ')*100)&"%","—")',
+      "=IFERROR(COUNTIF(" + rng + ',"' + KEY[i] + '")/COUNTA(' + rng + '),"")',
     ]);
   }
+  sh.getRange("J2:J11").setNumberFormat("0%");
 
   sh.appendRow([""]);
   sh.appendRow(["Рівень", "Проходжень"]);
@@ -118,4 +119,105 @@ function setupStats() {
   });
   sh.appendRow(["Всього проходжень", "=COUNTA(results!A2:A)"]);
   sh.appendRow(["Середній бал", '=IFERROR(ROUND(AVERAGE(results!B2:B),1),"—")']);
+}
+
+/* ===================== ОФОРМЛЕННЯ ===================== */
+
+var INK = "#262626";
+var PAPER = "#f6f1e2";
+var PAPER2 = "#efe7d0";
+var RED = "#c03a2e";
+var GOLD = "#b07d2b";
+var GREEN = "#2e7d3b";
+var GREEN_BG = "#e2efe3";
+var RED_BG = "#f8e6e3";
+
+/** Разове оформлення всіх аркушів: Run → formatAll */
+function formatAll() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  formatResults_(ss);
+  formatQuestions_(ss);
+  formatStats_(ss);
+}
+
+function header_(sh, cols) {
+  sh.getRange(1, 1, 1, cols)
+    .setBackground(INK).setFontColor("#ffffff").setFontWeight("bold")
+    .setFontSize(11).setVerticalAlignment("middle");
+  sh.setRowHeight(1, 34);
+  sh.setFrozenRows(1);
+}
+
+function formatResults_(ss) {
+  var sh = ss.getSheetByName("results");
+  if (!sh) return;
+  header_(sh, 13);
+  sh.setColumnWidth(1, 150);
+  sh.getRange("A2:A").setNumberFormat("dd.mm.yyyy hh:mm");
+  sh.getRange("B2:B").setHorizontalAlignment("center").setFontWeight("bold");
+  sh.getRange("D1:M1000").setHorizontalAlignment("center");
+  sh.getRange("A2:M1000").setBackground(PAPER);
+
+  // правильна відповідь — зелена клітинка, неправильна — рожева
+  var cols = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
+  var rules = [];
+  for (var i = 0; i < 10; i++) {
+    var c = cols[i];
+    var rng = sh.getRange(c + "2:" + c + "1000");
+    rules.push(SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=AND($' + c + '2<>"",$' + c + '2="' + KEY[i] + '")')
+      .setBackground(GREEN_BG).setFontColor(GREEN).setRanges([rng]).build());
+    rules.push(SpreadsheetApp.newConditionalFormatRule()
+      .whenFormulaSatisfied('=AND($' + c + '2<>"",$' + c + '2<>"' + KEY[i] + '")')
+      .setBackground(RED_BG).setFontColor(RED).setRanges([rng]).build());
+  }
+  sh.setConditionalFormatRules(rules);
+}
+
+function formatQuestions_(ss) {
+  var sh = ss.getSheetByName("questions");
+  if (!sh) return;
+  header_(sh, 4);
+  sh.setColumnWidth(2, 220);
+  sh.setColumnWidth(4, 560);
+  sh.getRange("A2:A11").setHorizontalAlignment("center").setFontWeight("bold");
+  sh.getRange("C2:C11").setHorizontalAlignment("center")
+    .setFontWeight("bold").setFontColor(GREEN);
+  sh.getRange("D2:D11").setWrap(true);
+  sh.getRange("A2:D11").setBackground(PAPER).setVerticalAlignment("middle");
+}
+
+function formatStats_(ss) {
+  var sh = ss.getSheetByName("stats");
+  if (!sh) return;
+  header_(sh, 10);
+  sh.setColumnWidth(2, 210);
+  sh.setColumnWidth(3, 420);
+  sh.getRange("C2:C11").setWrap(true).setFontSize(9);
+  sh.getRange("A2:A11").setHorizontalAlignment("center").setFontWeight("bold");
+  sh.getRange("D2:D11").setHorizontalAlignment("center")
+    .setFontWeight("bold").setFontColor(GREEN);
+  sh.getRange("E2:J11").setHorizontalAlignment("center");
+  sh.getRange("A2:J11").setBackground(PAPER).setVerticalAlignment("middle");
+  sh.getRange("A3:J3").setBackground(PAPER2);
+  sh.getRange("A5:J5").setBackground(PAPER2);
+  sh.getRange("A7:J7").setBackground(PAPER2);
+  sh.getRange("A9:J9").setBackground(PAPER2);
+  sh.getRange("A11:J11").setBackground(PAPER2);
+
+  // градієнт на % правильних: червоний → жовтий → зелений
+  var rules = sh.getConditionalFormatRules() || [];
+  rules.push(SpreadsheetApp.newConditionalFormatRule()
+    .setGradientMinpointWithValue("#e39c92", SpreadsheetApp.InterpolationType.NUMBER, "0")
+    .setGradientMidpointWithValue("#ecd9a8", SpreadsheetApp.InterpolationType.NUMBER, "0.5")
+    .setGradientMaxpointWithValue("#9ec9a4", SpreadsheetApp.InterpolationType.NUMBER, "1")
+    .setRanges([sh.getRange("J2:J11")]).build());
+  sh.setConditionalFormatRules(rules);
+
+  // блок рівнів
+  sh.getRange("A13:B13").setFontWeight("bold").setBackground(INK).setFontColor("#ffffff");
+  sh.getRange("A14:B14").setBackground(RED_BG).setFontColor(RED).setFontWeight("bold");
+  sh.getRange("A15:B15").setBackground("#f3ead6").setFontColor(GOLD).setFontWeight("bold");
+  sh.getRange("A16:B16").setBackground(GREEN_BG).setFontColor(GREEN).setFontWeight("bold");
+  sh.getRange("A17:B18").setFontWeight("bold");
 }
