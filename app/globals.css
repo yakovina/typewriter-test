@@ -218,7 +218,8 @@ body {
 }
 
 h1.title {
-  font-size: clamp(26px, 4.6vw, 38px);
+  /* на вузьких екранах масштабується від ширини — не менше 30px */
+  font-size: clamp(30px, 7.6vw, 38px);
   line-height: 1.15;
   font-weight: 800;
   letter-spacing: -0.01em;
@@ -241,10 +242,12 @@ h1.title .accent {
 }
 
 .lead {
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 17.5px;
+  font-weight: 700;
   line-height: 1.5;
-  margin-bottom: 14px;
+  border-left: 3px solid var(--bad);
+  padding-left: 14px;
+  margin: 20px 0 18px;
 }
 
 .prose p {
@@ -807,6 +810,22 @@ h1.title .accent {
 
   .trapHead .uk {
     font-size: 16px;
+  }
+
+  /* інтро: читабельніший текст із повітрям */
+  .prose p {
+    font-size: 16px;
+    line-height: 1.68;
+    margin-bottom: 18px;
+  }
+
+  .range {
+    margin-bottom: 4px;
+  }
+
+  .steps {
+    margin: 24px 0 28px;
+    gap: 13px;
   }
 
   .pill {
