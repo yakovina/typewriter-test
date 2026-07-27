@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack && node scripts/fix-basepath.mjs",
+    "build:partner": "NEXT_PUBLIC_BASE_PATH=/partner/typerwriter-test NEXT_PUBLIC_SITE_URL=https://hmarochos.kiev.ua/partner/typerwriter-test npm run build",
     "start": "next start",
     "lint": "eslint"
   },

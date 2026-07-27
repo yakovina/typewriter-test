@@ -1,14 +1,14 @@
 import type { NextConfig } from "next";
 
-// Статичний експорт. Для GitHub Pages за адресою
-// https://<user>.github.io/typewriter-test/ лишіть repo як є;
-// для власного домену в корені — зробіть repo = "".
+// Статичний експорт. Базовий шлях задається змінною NEXT_PUBLIC_BASE_PATH
+// (див. scripts у package.json); за замовчуванням — GitHub Pages
+// /typewriter-test. Для кореня домену передайте порожній рядок.
 const isProd = process.env.NODE_ENV === "production";
-const repo = "typewriter-test";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "/typewriter-test";
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isProd && repo ? `/${repo}` : "",
+  basePath: isProd ? basePath : "",
   images: { unoptimized: true },
   trailingSlash: true,
 };

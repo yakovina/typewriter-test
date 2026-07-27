@@ -3,7 +3,7 @@
 import { readdirSync, readFileSync, writeFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-const BP = "/typewriter-test";
+const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "/typewriter-test";
 const root = join(process.cwd(), "out", "_next");
 
 function cssFiles(dir) {
